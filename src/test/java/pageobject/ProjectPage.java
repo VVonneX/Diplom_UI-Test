@@ -10,6 +10,7 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
+import static java.lang.Thread.sleep;
 
 public class ProjectPage {
 
@@ -39,13 +40,14 @@ public class ProjectPage {
         return newNote.isDisplayed();
     }
 
-    public boolean deleteAndCheckDisplayNote() {
+    public boolean deleteAndCheckDisplayNote() throws InterruptedException {
         int numNewNote = locatorAllNote.size() - 1;
         SelenideElement newNote = $x(String.format(locatorNewNote, numNewNote));
-        newNote.scrollIntoView("{behavior: 'smooth', block: 'center'}")
-                .shouldBe(visible, Duration.ofSeconds(10)); // Ждём до 10 сек
+        newNote.scrollIntoView("{behavior: 'smooth', block: 'end'}")
+                .shouldBe(visible, Duration.ofSeconds(10));
         newNote.shouldBe(interactable, Duration.ofSeconds(5))
                 .click();
+        Thread.sleep(1000);
         return locatorDialogContainer.shouldBe(visible, Duration.ofSeconds(5))
                 .isDisplayed();
     }

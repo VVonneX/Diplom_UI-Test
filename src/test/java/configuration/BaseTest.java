@@ -21,6 +21,7 @@ public class BaseTest {
         System.setProperty("webdriver.chrome.driver", "src/test/resources/driver/chromedriver.exe");
         Configuration.browser = "chrome";
         Configuration.baseUrl = "http://localhost:4200";
+        Configuration.headless = true;
         open("/");
         homePage = new HomePage();
         authorizationPage = new AuthorizationPage();

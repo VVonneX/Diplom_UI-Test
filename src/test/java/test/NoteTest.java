@@ -19,7 +19,7 @@ public class NoteTest extends BaseTest {
     }
 
     @Test
-    public void deleteNote() {
+    public void deleteNote() throws InterruptedException {
         homePage.clickButtonEnter();
         authorizationPage.setDataAndAuthorizations("admin", "1234");
         projectPage.createNote();
