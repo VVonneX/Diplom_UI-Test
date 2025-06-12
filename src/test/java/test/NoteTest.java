@@ -1,11 +1,11 @@
 package test;
 
-import com.codeborne.selenide.SelenideElement;
 import configuration.BaseTest;
 import org.junit.Assert;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import static com.codeborne.selenide.Selenide.*;
+
+import static com.codeborne.selenide.Selenide.sleep;
+
 public class NoteTest extends BaseTest {
 
     @Test

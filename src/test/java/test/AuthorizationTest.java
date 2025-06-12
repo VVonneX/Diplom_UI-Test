@@ -1,13 +1,8 @@
 package test;
 
-import com.codeborne.selenide.Configuration;
 import configuration.BaseTest;
 import org.junit.Assert;
 import org.junit.Test;
-import pageobject.AuthorizationPage;
-import pageobject.HomePage;
-
-import static com.codeborne.selenide.Selenide.open;
 
 public class AuthorizationTest extends BaseTest {
     @Test

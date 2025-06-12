@@ -2,10 +2,14 @@ package pageobject;
 
 import com.codeborne.selenide.SelenideElement;
 
+import java.time.Duration;
 import java.util.List;
 
+import static com.codeborne.selenide.Condition.interactable;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$x;
+import static com.codeborne.selenide.Selenide.$x;
 
 public class ProjectPage {
 
@@ -36,18 +40,14 @@ public class ProjectPage {
     }
 
     public boolean deleteAndCheckDisplayNote() {
-        sleep(1000);
         int numNewNote = locatorAllNote.size() - 1;
-        sleep(1000);
         SelenideElement newNote = $x(String.format(locatorNewNote, numNewNote));
-        sleep(1000);
-        newNote.scrollTo();
-        sleep(1000);
-        newNote.shouldBe(visible);
-        sleep(2000);
-        newNote.click();
-        sleep(2000);
-        return locatorDialogContainer.isDisplayed();
+        newNote.scrollIntoView("{behavior: 'smooth', block: 'center'}")
+                .shouldBe(visible, Duration.ofSeconds(10)); // Ждём до 10 сек
+        newNote.shouldBe(interactable, Duration.ofSeconds(5))
+                .click();
+        return locatorDialogContainer.shouldBe(visible, Duration.ofSeconds(5))
+                .isDisplayed();
     }
 
     public String refactorAndReturnHeaderNameNote(Long numNote, String oldNameNote, String newNameNote) {
@@ -62,5 +62,4 @@ public class ProjectPage {
         refactorNote.shouldBe(visible);
         return refactorNote.getText();
     }
-//*[@id="mat-dialog-0"]/app-create-edit/div/mat-dialog-actions/button[2]/span[1]
 }
