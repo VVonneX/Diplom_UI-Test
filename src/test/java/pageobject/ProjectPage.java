@@ -47,8 +47,8 @@ public class ProjectPage {
                 .shouldBe(visible, Duration.ofSeconds(10));
         newNote.shouldBe(interactable, Duration.ofSeconds(5))
                 .click();
-        Thread.sleep(1000);
-        return locatorDialogContainer.shouldBe(visible, Duration.ofSeconds(5))
+        Thread.sleep(3000);
+        return newNote.shouldBe(visible, Duration.ofSeconds(5))
                 .isDisplayed();
     }
 
