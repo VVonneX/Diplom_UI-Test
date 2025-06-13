@@ -9,6 +9,7 @@ import pageobject.HomePage;
 import pageobject.ProjectPage;
 
 import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 public class BaseTest {
 
@@ -23,6 +24,7 @@ public class BaseTest {
         Configuration.baseUrl = "http://localhost:4200";
         Configuration.headless = true;
         open("/");
+        getWebDriver().manage().window().fullscreen();
         homePage = new HomePage();
         authorizationPage = new AuthorizationPage();
         projectPage = new ProjectPage();

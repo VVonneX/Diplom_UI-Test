@@ -28,11 +28,22 @@ public class NoteTest extends BaseTest {
     }
 
     @Test
-    public void refactorNote() {
+    public void refactorHeaderNote() {
         homePage.clickButtonEnter();
         authorizationPage.setDataAndAuthorizations("admin", "1234");
         String nameNote = projectPage.refactorAndReturnHeaderNameNote(1L, "Заметка 1", "Измененная заметка");
         sleep(1000);
         Assert.assertEquals("Измененная заметка", nameNote);
     }
+
+    @Test
+    public void refactorDescriptionNote() throws InterruptedException {
+        String expectedDescription = "Test description";
+        homePage.clickButtonEnter();
+        authorizationPage.setDataAndAuthorizations("admin", "1234");
+        projectPage.createNote();
+        String actualDescription = projectPage.refactorDescriptionNote(expectedDescription);
+        Assert.assertEquals(expectedDescription, actualDescription);
+    }
+
 }

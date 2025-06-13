@@ -10,6 +10,7 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.switchTo;
 import static java.lang.Thread.sleep;
 
 public class ProjectPage {
@@ -18,6 +19,7 @@ public class ProjectPage {
     private SelenideElement locatorButtonCreateNote = $x("//button[@class='mat-focus-indicator mat-raised-button mat-button-base mat-primary']");
     private List<SelenideElement> locatorAllNote = $$x("//button[span[text()='Удалить']]");
     private String locatorNewNote = "(//button[span[text()='Удалить']])[%s]";
+    private String locatorNewNoteDescription = "//div[%s]//p[text()]";
     private SelenideElement locatorDialogContainer = $("#mat-dialog-0");
     private SelenideElement locatorInputHeaderField = $("#mat-input-0");
     private SelenideElement locatorButtonSave = $x("//button/span[text()='Сохранить']");
@@ -33,7 +35,7 @@ public class ProjectPage {
     }
 
     public boolean checkDisplayNote() {
-        int numNewNote = locatorAllNote.size() - 1;
+        int numNewNote = locatorAllNote.size();
         SelenideElement newNote = $x(String.format(locatorNewNote, numNewNote));
         newNote.scrollTo();
         newNote.shouldBe(visible);
@@ -41,7 +43,7 @@ public class ProjectPage {
     }
 
     public boolean deleteAndCheckDisplayNote() throws InterruptedException {
-        int numNewNote = locatorAllNote.size() - 1;
+        int numNewNote = locatorAllNote.size();
         SelenideElement newNote = $x(String.format(locatorNewNote, numNewNote));
         newNote.scrollIntoView("{behavior: 'smooth', block: 'end'}")
                 .shouldBe(visible, Duration.ofSeconds(10));
@@ -64,4 +66,23 @@ public class ProjectPage {
         refactorNote.shouldBe(visible);
         return refactorNote.getText();
     }
+
+    public String refactorDescriptionNote(String textDescription) throws InterruptedException {
+        sleep(1000);
+        int numNewNote = locatorAllNote.size();
+        SelenideElement newNote = $x(String.format(locatorNewNote, numNewNote));
+        newNote.scrollIntoView("{block: 'end'}")
+                .shouldBe(visible, Duration.ofSeconds(10));
+        sleep(1000);
+        SelenideElement descriptionElement = $x(String.format(locatorNewNoteDescription, numNewNote));
+        descriptionElement.click();
+        switchTo().frame($("iframe"));
+        $("#tinymce").clear();
+        $("#tinymce").shouldBe(visible, Duration.ofSeconds(10)).setValue(textDescription);
+        switchTo().defaultContent();
+        locatorButtonSave.click();
+        sleep(1000);
+        return $x(String.format(locatorNewNoteDescription, numNewNote)).getText();
+    }
+
 }
