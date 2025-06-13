@@ -43,6 +43,7 @@ public class ProjectPage {
     }
 
     public boolean deleteAndCheckDisplayNote() throws InterruptedException {
+        sleep(1000);
         int numNewNote = locatorAllNote.size();
         SelenideElement newNote = $x(String.format(locatorNewNote, numNewNote));
         newNote.scrollIntoView("{behavior: 'smooth', block: 'end'}")
